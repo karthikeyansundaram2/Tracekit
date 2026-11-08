@@ -613,7 +613,7 @@ def _pre(client, p, sid, tid):
         if c is None and state == "requested":   # nobody answered yet: the person approves it, then the agent retries
             # Claude Code runs a `!` line in the session as its OS user: the person, with the dev signer; with a named
             # signer (system mode, a remote one) that user is the agent's, whom the signer refuses: another terminal
-            bang = "! " if AGENT == "claude-code" and not client.signer else ""
+            bang = "! " if (AGENT == "claude-code" or AGENT == "codex") and not client.signer else ""
             expires, look = _utc(asked.get("expires_at")), f"look with `{bang}{cmd} show {aid}`"
             if waited.get("reason"):   # an agent approver's approval in its veto delay: approved, it may run after it
                 return _block(stopped(f"HELD, nothing ran: {aid}{_rules(d['rule_ids'])} is {waited['reason']}, then "
